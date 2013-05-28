@@ -1,0 +1,18 @@
+# HG changeset patch
+# User Hon Leung Lee <honleungdydx@gmail.com>
+# Date 1369778775 25200
+# Node ID f6e02dc905fb8272e57b0a6092c86963318f6578
+# Parent  1077314f416653b28e199c382667a1f11e444bdd
+Added a nice sentence before the output of the mean function.
+
+diff --git a/sage/stats/basic_stats.py b/sage/stats/basic_stats.py
+--- a/sage/stats/basic_stats.py
++++ b/sage/stats/basic_stats.py
+@@ -74,6 +74,7 @@
+         sage: mean(v)
+         50.5
+     """
++    print "The mean is actually...."
+     if hasattr(v, 'mean'): return v.mean()
+     if len(v) == 0:
+         return NaN
