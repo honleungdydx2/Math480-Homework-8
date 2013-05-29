@@ -1,0 +1,56 @@
+"""
+6 states: Doing homework, having dinner, singing, shower, using facebook, sleeping
+probabilities of uttering each phrase: equal likely
+
+probabilities to transition from any one state to another (every 10 minutes):
+Homework --> Homework: 20%
+Homework --> Dinner: 20%
+Homework --> Sing: 20%
+Homework --> Shower: 20%
+Homework --> Facebook: 20%
+Dinner --> Homework: 25%
+Dinner --> Sing: 58%
+Dinner --> Facebook: 17%
+Sing --> Homework: 18%
+Sing --> Dinner: 18%
+Sing --> Sing: 1%
+Sing --> Shower: 32%
+Sing --> Facebook: 30%
+Sing --> Sleep: 1%
+Shower --> Homework: 30%
+Shower --> Sing: 20%
+Shower --> Shower: 30%
+Shower --> Facebook: 20%
+Facebook --> Homework: 6%
+Facebook --> Dinner: 61%
+Facebook --> Shower: 17%
+Facebook --> Facebook: 3%
+Facebook --> Sleep: 13%
+Sleep --> Homework: 1%
+Sleep --> Dinner: 1%
+Sleep --> Sing: 1%
+Sleep --> Shower: 1%
+Sleep --> Facebook: 10%
+Sleep --> Sleep: 86%
+"""
+
+A = matrix(RR, 6, [0.2, 0.2,   0.2,  0.2, 0.2, 0,  # Homework
+                   0.25, 0,   0.58,   0,  0.17, 0, # Dinner
+                   0.18, 0.18, 0.01, 0.32, 0.3 , 0.01, # Sing
+                   0.3, 0,     0.2,  0.3,  0.2, 0, # Shower
+                   0.06, 0.61,  0,   0.17,  0.03, 0.13, # Facebook
+                   0.01, 0.01, 0.01, 0.01, 0.1, 0.86]) # Sleep
+                   
+emission_symbols = ['la la la', 'Done' , 'Yummy!', 'Yucky', 'Happy Birthday', 'ZZZ']
+
+B = matrix(RR, 6,6, [0.4, 0.4, 0, 0, 0, 0.2,  # Homework
+                   0.09, 0, 0.4, 0.4, 0.1, 0.01, # Dinner
+                   0.5, 0, 0, 0, 0.5, 0, # Sing
+                   0.8, 0, 0, 0, 0, 0.2, # Shower
+                   0, 0.3, 0.3, 0.3, 0.1, 0, # Facebook
+                   0, 0, 0, 0.1, 0, 0.9]) # Sleep
+                   
+initial = [1,0,0,0,0,0]
+model = hmm.DiscreteHiddenMarkovModel(A, B, initial, emission_symbols)
+
+model.graph().plot(edge_labels=True, graph_border=True).show(figsize=9)
